@@ -2,7 +2,7 @@ package org.abigotado.app.domain.models.pieces;
 
 import org.abigotado.app.domain.models.ChessBoard;
 
-public class Bishop extends ChessPiece {
+public class Bishop extends DirectionallyMovingPiece {
 
     public Bishop(String color) {
         super(color);
@@ -16,7 +16,11 @@ public class Bishop extends ChessPiece {
     @Override
     public boolean canMoveToPosition(ChessBoard board, int line, int column, int toLine, int toColumn) {
         if (toLine < 0 || toLine > 7 || toColumn < 0 || toColumn > 7) return false;
-        return Math.abs(line - toLine) == Math.abs(column - toColumn) && (line != toLine && column != toColumn);
+
+        if (Math.abs(line - toLine) == Math.abs(column - toColumn) && (line != toLine && column != toColumn)) {
+            return canMoveDiagonally(board, line, column, toLine, toColumn);
+        }
+        return false;
     }
 
     @Override
